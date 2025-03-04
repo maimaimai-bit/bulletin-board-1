@@ -1,0 +1,62 @@
+<h1><%= @board.name %></h1>
+
+<div>
+  <h2>Active Posts</h2>
+  
+  <% @board.posts.where("expires_on >= ?", Date.today).each do |post| %>
+    <div>
+      <h3><%= post.title %></h3>
+      <p><%= post.body %></p>
+      <p>Expires on: <%= post.expires_on %></p>
+    </div>
+  <% end %>
+</div>
+
+<div>
+  <h2>Expired Posts</h2>
+  
+  <% @board.posts.where("expires_on < ?", Date.today).each do |post| %>
+    <div>
+      <h3><%= post.title %></h3>
+      <p><%= post.body %></p>
+      <p>Expired on: <%= post.expires_on %></p>
+    </div>
+  <% end %>
+</div>
+
+<hr>
+
+<h2>Add a new post</h2>
+
+<form action="/insert_post" method="post">
+  <div>
+    <label for="title">Title</label>
+    <input id="title" name="title" type="text">
+  </div>
+
+  <div>
+    <label for="body">Body</label>
+    <textarea id="body" name="body"></textarea>
+  </div>
+
+  <div>
+    <label for="expires_on">Expires on</label>
+    <input id="expires_on" name="expires_on" type="date">
+  </div>
+
+  <input type="hidden" name="board_id" value="<%= @board.id %>">
+
+  <button type="submit">Add post</button>
+</form>
+
+<% if notice.present? %>
+  <div>
+    <%= notice %>
+  </div>
+<% end %>
+
+<% if alert.present? %>
+  <div>
+    <%= alert %>
+  </div>
+<% end %> 
