@@ -1,10 +1,10 @@
 class CreatePosts < ActiveRecord::Migration[7.1]
   def change
     create_table :posts do |t|
-      t.string :title
-      t.text :body
-      t.date :expires_on
-      t.integer :board_id
+      t.references :board, null: false, foreign_key: true
+      t.string :title, null: false
+      t.text :body, null: false
+      t.date :expires_on, null: false
 
       t.timestamps
     end

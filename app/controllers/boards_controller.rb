@@ -1,25 +1,23 @@
 class BoardsController < ApplicationController
   def index
     @boards = Board.all
-    
-    render({ :template => "boards/index" })
   end
   
   def show
-    @board = Board.find(params.fetch(:id))
+    @board = Board.find(params[:id])
+    @posts = @board.posts
     
     render({ :template => "boards/show" })
   end
   
   def create
     @board = Board.new
-    @board.name = params.fetch(:name)
+    @board.name = params[:name]
     
-    if @board.valid?
-      @board.save
-      redirect_to("/boards", { :notice => "Board created successfully." })
+    if @board.save
+      redirect_to "/boards", notice: "Board created successfully."
     else
-      redirect_to("/boards", { :alert => @board.errors.full_messages.to_sentence })
+      redirect_to "/boards", alert: "Board could not be created."
     end
   end
 end 

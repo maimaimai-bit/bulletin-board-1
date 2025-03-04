@@ -1,16 +1,15 @@
 class PostsController < ApplicationController
   def create
     @post = Post.new
-    @post.title = params.fetch(:title)
-    @post.body = params.fetch(:body)
-    @post.expires_on = params.fetch(:expires_on)
-    @post.board_id = params.fetch(:board_id)
+    @post.title = params[:title]
+    @post.body = params[:body]
+    @post.expires_on = params[:expires_on]
+    @post.board_id = params[:board_id]
     
-    if @post.valid?
-      @post.save
-      redirect_to("/boards/#{@post.board_id}", { :notice => "Post created successfully." })
+    if @post.save
+      redirect_to "/boards/#{@post.board_id}", notice: "Post created successfully."
     else
-      redirect_to("/boards/#{@post.board_id}", { :alert => @post.errors.full_messages.to_sentence })
+      redirect_to "/boards/#{params[:board_id]}", alert: "Post could not be created."
     end
   end
 end 

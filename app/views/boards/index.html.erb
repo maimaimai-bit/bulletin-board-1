@@ -1,14 +1,12 @@
-<h1>Boards</h1>
+<h1>Bulletin Boards</h1>
 
-<% @boards.each do |board| %>
-  <div>
-    <a href="/boards/<%= board.id %>">
-      <%= board.name %>
-    </a>
-  </div>
-<% end %>
-
-<hr>
+<ul>
+  <% @boards.each do |board| %>
+    <li>
+      <a href="/boards/<%= board.id %>"><%= board.name %></a>
+    </li>
+  <% end %>
+</ul>
 
 <h2>Add a new board</h2>
 
@@ -18,7 +16,7 @@
     <input id="name" name="name" type="text">
   </div>
 
-  <button type="submit">Add board</button>
+  <button>Add board</button>
 </form>
 
 <% if notice.present? %>
